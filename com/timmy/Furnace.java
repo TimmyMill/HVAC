@@ -1,10 +1,13 @@
-
+package com.timmy;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * Represents a service call to fix a furnace
+ */
 
 public class Furnace extends ServiceCall {
 
@@ -35,10 +38,8 @@ public class Furnace extends ServiceCall {
                 "Resolved Date = " + resolvedDateString + "\n" +
                 "Resolution = " + resolutionString + "\n" +
                 "Fee = " + feeString ;
-
     }
-
-
+    
     //Inner class to collect the different varieties of furnace
     //When we ask for the type, we'll use the constants from this class to display the choice of types.
 
@@ -50,9 +51,9 @@ public class Furnace extends ServiceCall {
 
         static HashMap<Integer, String> furnaceTypes;
 
-        //Static initializaion block
+        //Static initialization block
         static {
-            furnaceTypes = new HashMap<Integer, String>();
+            furnaceTypes = new HashMap<>();
             furnaceTypes.put(FORCED_AIR,"Forced Air");
             furnaceTypes.put(BOILER,"Boiler/Radiators");
             furnaceTypes.put(OCTOPUS,"Older 'Octopus' Style");
@@ -66,29 +67,20 @@ public class Furnace extends ServiceCall {
             else {
                 return "Unknown type";
             }
-
         }
 
         public static String furnaceTypeUserChoices() {
 
-            //Get all of the keys from the Hashmap and sort them in order
-            ArrayList<Integer> keys = new ArrayList<Integer>(furnaceTypes.keySet());
+            //Get all of the keys from the HashMap and sort them in order
+            ArrayList<Integer> keys = new ArrayList<>(furnaceTypes.keySet());
             Collections.sort(keys);
-
 
             //Build and return a string of all the keys and their values
             String userChoices = "";
             for (Integer k : keys) {
-
                 userChoices = userChoices + k + " : " + furnaceTypes.get(k) + "\n";
-
             }
-
             return userChoices;
         }
-
     }
-
-
-
 }

@@ -1,4 +1,4 @@
-
+package com.timmy;
 
 import java.util.LinkedList;
 import java.util.Date;
@@ -11,25 +11,25 @@ public class HVAC {
      */
 
     private static LinkedList<ServiceCall> todayServiceCalls;
-    private static LinkedList<ServiceCall> resolvedServiceCalls;
 
     private static Scanner scanner;   //Global scanner used for all input
 
 
     public static void main(String[] args) {
 
-        //Use todayServiceCalls as a Queue
-        //So, add new calls to the end with add()
-        //Remove a resolved call from the front of the queue with remove()
-        //Check on the current call - the one at the head of the queue - with peek()
+        /*
+        Use todayServiceCalls as a Queue
+        So, add new calls to the end with add()
+        Remove a resolved call from the front of the queue with remove()
+        Check on the current call - the one at the head of the queue - with peek()
+        This will enable us to deal with calls in the order in which they were received
+        */
 
-        //This will enable us to deal with calls in the order in which they were received
+        todayServiceCalls = new LinkedList<>();
 
-        todayServiceCalls = new LinkedList<ServiceCall>();
+        /* This will be used to store a list of resolved service calls. */
 
-        // This will be used to store a list of resolved service calls.
-
-        resolvedServiceCalls = new LinkedList<ServiceCall>();
+        LinkedList<ServiceCall> resolvedServiceCalls = new LinkedList<>();
 
         scanner = new Scanner(System.in);
 
@@ -140,14 +140,14 @@ public class HVAC {
         scanner.close();
     }
 
-
     private static void addServiceCall() {
 
         //What type of thing needs servicing?
 
         System.out.println("1. Add service call for furnace");
         System.out.println("2. Add service call for AC unit");
-        System.out.println("3. Quit");
+        System.out.println("3. Add service call for water heater");
+        System.out.println("4. Quit");
 
         int choice = getPositiveIntInput();
 
@@ -180,8 +180,10 @@ public class HVAC {
 
                 System.out.println("Enter address of AC Unit");
                 String address = getStringInput();
+
                 System.out.println("Enter description of problem");
                 String problem = getStringInput();
+
                 System.out.println("Enter model of AC unit");
                 String model = getStringInput();
 
@@ -192,6 +194,23 @@ public class HVAC {
 
             }
             case 3: {
+
+                System.out.println("Enter address of water heater");
+                String address = getStringInput();
+
+                System.out.println("Enter description of problem");
+                String problem = getStringInput();
+
+                System.out.println("Enter the age of the water heater?");
+                int age = getPositiveIntInput();
+
+                WaterHeater w = new WaterHeater(address, problem, new Date(), age);
+                todayServiceCalls.add(w);
+                System.out.println("Added the following water heater to the list of calls:\n" + w);
+                break;
+
+            }
+            case 4: {
                 return;
 
             }
@@ -202,7 +221,6 @@ public class HVAC {
         }
 
     }
-
 
     //Validation methods
 
@@ -216,7 +234,6 @@ public class HVAC {
                     return intInput;
                 } else {
                     System.out.println("Please enter a positive number");
-                    continue;
                 }
             } catch (NumberFormatException ime) {
                 System.out.println("Please type a positive number");
@@ -235,7 +252,6 @@ public class HVAC {
                     return doubleInput;
                 } else {
                     System.out.println("Please enter a positive number");
-                    continue;
                 }
             } catch (NumberFormatException ime) {
                 System.out.println("Please type a positive number");
@@ -245,10 +261,7 @@ public class HVAC {
     }
 
     private static String getStringInput() {
-
-        String entry = scanner.nextLine();
-        return entry;
-
+        return scanner.nextLine();
     }
 }
 
